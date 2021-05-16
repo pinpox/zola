@@ -1,7 +1,7 @@
-<nav>
-  <ul>
-    <li> <a href="{{ get_url(path="@/_index.md") }}"> Home </a> </li>
-    <li> <a href="{{ get_url(path="@/contact.md") }}"> Contact </a> </li>
-    <li> <a href="{{ get_url(path="@/about.md") }}"> About </a> </li>
-  </ul>
+<nav class="nav" tabindex="-1" onclick="this.focus()">
+		<div class="container">
+				<a class="pagename current" href="{{ get_url(path="@/index.md") }}">pinpox</a>
+				<a href="{{ get_url(path="@/contact.md") }}"> Contact </a>
+				<a href="{{ get_url(path="@/about.md") }}"> About </a>
+		</div>
 </nav>
