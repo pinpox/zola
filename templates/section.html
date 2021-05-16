@@ -1,16 +1,36 @@
 {% extends "index.html" %}
 
 {% block content %}
-  <h1>{{ section.title }}</h1>
-  <p>{{ section.content | safe }}</p>
-  <p>Pages in section</p>
-  <ul>
-  {% for page in section.pages | reverse %}
-      <li>
-        <em> <a href="{{ page.permalink }}"> {{ page.title }} </a> </em>
-        <span>{{ page.date | date(format="%Y-%m-%d") }}</span>
-      </li>
-  {% endfor %}
-  </ul>
+
+    <h1>{{ section.title }}</h1>
+
+    <p>{{ section.content | safe }}</p>
+
+    <!-- If the section (folder) contains subsections (subfolders), we show a
+	list as categories with individual posts for each -->
+	{% for cat in section.subsections  %}
+
+	    <!-- Loop over subsections -->
+	    {% set section = get_section(path=cat) %}
+
+	    <h2><a href='{{section.permalink}}'>{{section.title}}</a></h2>
+	    <ul>
+		<!-- Loop over the pages of each section -->
+		<!-- TODO: This should be limited to the newerst 5 posts of
+		    each section -->
+		{% for page in section.pages  %}
+		<li>
+		    {{ page.date | date(format="%Y-%m-%d") }}
+		    <a href='{{page.permalink}}'>{{page.title}}</a>
+		</li>
+		{% endfor %}
+	    </ul>
+	    {% endfor %}
+
+	<!-- If the section (folder) contains posts, show a list -->
+	{% for page in section.pages | reverse %}
+	    {{ page.permalink }} - {{ page.title }}
+	    {{ page.date | date(format="%Y-%m-%d") }}
+	{% endfor %}
 
 {% endblock content %}
